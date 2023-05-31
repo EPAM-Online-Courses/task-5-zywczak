@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
+
 public class GameLobby {
 
     public static final String HERO_NOT_FOUND = "Nie ma takiego bohatera ";
