@@ -20,6 +20,7 @@ public class GameLobby {
 
     private final DataProvider dataProvider;
     private Map<Town, List<Hero>> playableTownsWithHeroesList;
+    private Map<Town, List<Hero>> dlcTownsAndHeroesList; // dodana zmienna
 
     public GameLobby() {
         this.dataProvider = new DataProvider();
@@ -35,13 +36,13 @@ public class GameLobby {
     // miast - playableTownsWithHeroesList, tylko jeżeli jeszcze się na niej nie znajdują.
     public void enableDLC() {
        for (Map.Entry<Town, List<Hero>> entry : dlcTownsAndHeroesList.entrySet()) {
-        Town dlcTown = entry.getKey();
-        List<Hero> dlcHeroes = entry.getValue();
+            Town dlcTown = entry.getKey();
+            List<Hero> dlcHeroes = entry.getValue();
 
-        if (!playableTownsWithHeroesList.containsKey(dlcTown)) {
-            playableTownsWithHeroesList.put(dlcTown, dlcHeroes);
+            if (!playableTownsWithHeroesList.containsKey(dlcTown)) {
+                playableTownsWithHeroesList.put(dlcTown, dlcHeroes);
+            }
         }
-    }
     }
 
     //TODO Usunąć miasta i odpowiadających im bohaterów z DLC gry z mapy dostępnych
