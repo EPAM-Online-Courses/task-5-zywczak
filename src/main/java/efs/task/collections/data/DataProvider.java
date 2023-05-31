@@ -21,11 +21,17 @@ public class DataProvider {
         List<Town> townsList = new ArrayList<>();
 
         for (String townData : Data.baseTownsArray) {
-            String[] townDetails = townData.split(DATA_SEPARATOR);
-            String townName = townDetails[0].trim();
-            String hero1 = townDetails[1].trim();
-            String hero2 = townDetails[2].trim();
-            townsList.add(new Town(townName, hero1, hero2));
+            String[] townInfo = townData.split(DATA_SEPARATOR);
+            String townName = townInfo[0].trim();
+            String startingHero1 = townInfo[1].trim();
+            String startingHero2 = townInfo[2].trim();
+
+            List<String> startingHeroClasses = new ArrayList<>();
+            startingHeroClasses.add(startingHero1);
+            startingHeroClasses.add(startingHero2);
+
+            Town town = new Town(townName, startingHeroClasses);
+            townsList.add(town);
         }
 
         return townsList;
@@ -37,11 +43,17 @@ public class DataProvider {
         List<Town> dlcTownsList = new ArrayList<>();
 
         for (String townData : Data.dlcTownsArray) {
-            String[] townDetails = townData.split(DATA_SEPARATOR);
-            String townName = townDetails[0].trim();
-            String hero1 = townDetails[1].trim();
-            String hero2 = townDetails[2].trim();
-            dlcTownsList.add(new Town(townName, hero1, hero2));
+            String[] townInfo = townData.split(DATA_SEPARATOR);
+            String townName = townInfo[0].trim();
+            String startingHero1 = townInfo[1].trim();
+            String startingHero2 = townInfo[2].trim();
+
+            List<String> startingHeroClasses = new ArrayList<>();
+            startingHeroClasses.add(startingHero1);
+            startingHeroClasses.add(startingHero2);
+
+            Town town = new Town(townName, startingHeroClasses);
+            dlcTownsList.add(town);
         }
 
         return dlcTownsList;
@@ -55,10 +67,12 @@ public class DataProvider {
         Set<Hero> heroesSet = new HashSet<>();
 
         for (String heroData : Data.baseCharactersArray) {
-            String[] heroDetails = heroData.split(DATA_SEPARATOR);
-            String heroName = heroDetails[0].trim();
-            String heroClass = heroDetails[1].trim();
-            heroesSet.add(new Hero(heroName, heroClass));
+            String[] heroInfo = heroData.split(DATA_SEPARATOR);
+            String heroName = heroInfo[0].trim();
+            String heroClass = heroInfo[1].trim();
+
+            Hero hero = new Hero(heroName, heroClass);
+            heroesSet.add(hero);
         }
 
         return heroesSet;
@@ -69,10 +83,12 @@ public class DataProvider {
         Set<Hero> dlcHeroesSet = new HashSet<>();
 
         for (String heroData : Data.dlcCharactersArray) {
-            String[] heroDetails = heroData.split(DATA_SEPARATOR);
-            String heroName = heroDetails[0].trim();
-            String heroClass = heroDetails[1].trim();
-            dlcHeroesSet.add(new Hero(heroName, heroClass));
+            String[] heroInfo = heroData.split(DATA_SEPARATOR);
+            String heroName = heroInfo[0].trim();
+            String heroClass = heroInfo[1].trim();
+
+            Hero hero = new Hero(heroName, heroClass);
+            dlcHeroesSet.add(hero);
         }
 
         return dlcHeroesSet;
