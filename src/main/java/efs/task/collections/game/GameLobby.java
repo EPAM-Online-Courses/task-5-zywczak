@@ -12,6 +12,7 @@ import java.util.NoSuchElementException;
 import java.util.Comparator;
 import java.util.TreeMap;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class GameLobby {
 
@@ -21,6 +22,7 @@ public class GameLobby {
     private final DataProvider dataProvider;
     private Map<Town, List<Hero>> playableTownsWithHeroesList;
     private Map<Town, List<Hero>> dlcTownsAndHeroesList; // dodana zmienna
+    private Map<Town, List<Hero>> playableCharactersByTown;// dodana zmienna
 
     public GameLobby() {
         this.dataProvider = new DataProvider();
