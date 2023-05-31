@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.Set;
 
 import java.util.NoSuchElementException;
+import java.util.Comparator;
+import java.util.TreeMap;
+import java.util.ArrayList;
 
 public class GameLobby {
 
@@ -68,12 +71,12 @@ public class GameLobby {
     //  Każde z miast charakteryzuje się dwoma klasami bohaterów dostępnymi dla tego miasta - Town.startingHeroClass.
     //  Mapa ma zawierać pare klucz-wartość gdzie klucz: miasto, wartość: lista bohaterów;
     public Map<Town, List<Hero>> mapHeroesToStartingTowns(List<Town> availableTowns, Set<Hero> availableHeroes) {
-        Map<Town, List<Hero>> heroesByStartingTowns = new TreeMap<>(Comparator.comparing(Town::getName));
+        Map<Town, List<Hero>> heroesByStartingTowns = new TreeMap<>(Comparator.comparing(Town::getTownName));
 
         for (Town town : availableTowns) {
             List<Hero> townHeroes = new ArrayList<>();
             for (Hero hero : availableHeroes) {
-                if (hero.getHeroClass().equals(town.getStartingHeroClass())) {
+                if (hero.getHeroClass().equals(town.getStartingHeroClasses())) {
                     townHeroes.add(hero);
                 }
             }
