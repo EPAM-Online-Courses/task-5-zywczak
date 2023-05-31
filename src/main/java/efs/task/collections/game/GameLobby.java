@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 public class GameLobby {
@@ -32,40 +31,36 @@ public class GameLobby {
     //TODO Dodać miasta i odpowiadających im bohaterów z DLC gry do mapy dostępnych
     // miast - playableTownsWithHeroesList, tylko jeżeli jeszcze się na niej nie znajdują.
     public void enableDLC() {
-        List<Town> dlcTowns = dataProvider.getDLCTownsList();
-        Set<Hero> dlcHeroes = dataProvider.getDLCHeroesSet();
-        
-        for (Town town : dlcTowns) {
-            if (!playableTownsWithHeroesList.containsKey(town)) {
-                playableTownsWithHeroesList.put(town, new ArrayList<>());
-            }
-            List<Hero> heroesList = playableTownsWithHeroesList.get(town);
-            for (Hero hero : dlcHeroes) {
-                if (!heroesList.contains(hero)) {
-                    heroesList.add(hero);
-                }
-            }
+       for (Map.Entry<Town, List<Hero>> entry : dlcTownsAndHeroesList.entrySet()) {
+        Town dlcTown = entry.getKey();
+        List<Hero> dlcHeroes = entry.getValue();
+
+        if (!playableTownsWithHeroesList.containsKey(dlcTown)) {
+            playableTownsWithHeroesList.put(dlcTown, dlcHeroes);
         }
+    }
     }
 
     //TODO Usunąć miasta i odpowiadających im bohaterów z DLC gry z mapy dostępnych
     // miast - playableTownsWithHeroesList.
     public void disableDLC() {
-        List<Town> dlcTowns = dataProvider.getDLCTownsList();
-        
-        for (Town town : dlcTowns) {
-            playableTownsWithHeroesList.remove(town);
+       for (Map.Entry<Town, List<Hero>> entry : dlcTownsAndHeroesList.entrySet()) {
+        Town dlcTown = entry.getKey();
+
+        if (playableTownsWithHeroesList.containsKey(dlcTown)) {
+            playableTownsWithHeroesList.remove(dlcTown);
         }
+    }
     }
 
     // TODO Sprawdza czy mapa playableCharactersByTown zawiera dane miasto.
     //  Jeśli tak zwróć listę bohaterów z tego miasta.
     //  Jeśli nie rzuć wyjątek NoSuchElementException z wiadomością NO_SUCH_TOWN + town.getName()
     public List<Hero> getHeroesFromTown(Town town) { 
-         if (playableTownsWithHeroesList.containsKey(town)) {
-            return playableTownsWithHeroesList.get(town);
+        if (playableCharactersByTown.containsKey(town)) {
+            return playableCharactersByTown.get(town);
         } else {
-            throw new NoSuchElementException(NO_SUCH_TOWN + town.getName());
+            throw new NoSuchElementException("NO_SUCH_TOWN " + town.getTownName());
         }
     }
 
@@ -73,27 +68,29 @@ public class GameLobby {
     //  Każde z miast charakteryzuje się dwoma klasami bohaterów dostępnymi dla tego miasta - Town.startingHeroClass.
     //  Mapa ma zawierać pare klucz-wartość gdzie klucz: miasto, wartość: lista bohaterów;
     public Map<Town, List<Hero>> mapHeroesToStartingTowns(List<Town> availableTowns, Set<Hero> availableHeroes) {
-        Map<Town, List<Hero>> townHeroesMap = new TreeMap<>(Comparator.comparing(Town::getName));
+        Map<Town, List<Hero>> heroesByStartingTowns = new TreeMap<>(Comparator.comparing(Town::getName));
+
         for (Town town : availableTowns) {
-            List<Hero> heroes = new ArrayList<>();
+            List<Hero> townHeroes = new ArrayList<>();
             for (Hero hero : availableHeroes) {
                 if (hero.getHeroClass().equals(town.getStartingHeroClass())) {
-                    heroes.add(hero);
+                    townHeroes.add(hero);
                 }
             }
-            townHeroesMap.put(town, heroes);
+            heroesByStartingTowns.put(town, townHeroes);
         }
-        return townHeroesMap;
+
+        return heroesByStartingTowns;
     }
 
     //TODO metoda zwraca wybranego bohatera na podstawie miasta z którego pochodzi i imienia.
     // Jeżeli istnieje usuwa go z listy dostępnych bohaterów w danym mieście i zwraca bohatera.
     // Jeżeli nie ma go na liście dostępnych bohaterów rzuca NoSuchElementException z wiadomością HERO_NOT_FOUND + name
     public Hero selectHeroByName(Town heroTown, String name) {
-        List<Hero> availableHeroes = playableCharactersByTown.get(heroTown);
+       List<Hero> townHeroes = playableCharactersByTown.get(heroTown);
 
-        if (availableHeroes != null) {
-            for (Iterator<Hero> iterator = availableHeroes.iterator(); iterator.hasNext();) {
+        if (townHeroes != null) {
+            for (Iterator<Hero> iterator = townHeroes.iterator(); iterator.hasNext();) {
                 Hero hero = iterator.next();
                 if (hero.getName().equals(name)) {
                     iterator.remove();
