@@ -15,20 +15,15 @@ public class DataProvider {
     //  Korzystając z funkcji split() oraz stałej DATA_SEPARATOR utwórz listę obiektów klasy efs.task.collections.entities.Town.
     //  Funkcja zwraca listę obiektów typu Town ze wszystkimi dziewięcioma podstawowymi miastami.
     public List<Town> getTownsList() {
-
-        List<Town> listTowns = new ArrayList<>(Data.baseTownsArray.length);
-
+        List<Town> towns = new ArrayList<>();
         for (String town : Data.baseTownsArray) {
-            String[] parts = town.split(DATA_SEPARATOR);
-
-            for (int i = 0; i < parts.length; i++) {
-                parts[i] = parts[i].replace(" ", "");
-            }
-
-            listTowns.add(new Town(parts[0], new ArrayList<>(Arrays.asList(parts[1], parts[2]))));
+            String[] townData = town.split(DATA_SEPARATOR);
+            List<String> startingHeroes = new ArrayList<>();
+            startingHeroes.add(townData[1].trim());
+            startingHeroes.add(townData[2].trim());
+            towns.add(new Town(townData[0], startingHeroes));
         }
-
-        return listTowns;
+        return towns;
     }
 
     //TODO Analogicznie do getTownsList utwórz listę miast na podstawie tablicy Data.DLCTownsArray
