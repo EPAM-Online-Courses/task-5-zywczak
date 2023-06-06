@@ -6,8 +6,7 @@ import efs.task.collections.entity.Town;
 import java.util.List;
 import java.util.Set;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 
 public class DataProvider {
 
