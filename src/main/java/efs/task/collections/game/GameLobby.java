@@ -62,12 +62,11 @@ public class GameLobby {
     //  Mapa ma zawierać pare klucz-wartość gdzie klucz: miasto, wartość: lista bohaterów;
     public Map<Town, List<Hero>> mapHeroesToStartingTowns(List<Town> availableTowns, Set<Hero> availableHeroes) {
         Map<Town, List<Hero>> townsWithHeroesMap = new TreeMap<>(Comparator.comparing(Town::getTownName));
-
         for(Town town : availableTowns){
             List<Hero> heroesForTown = new ArrayList<>();
-
+            //List<String> startingHeros = town.getStartingHeroClasses();
             for(Hero hero : availableHeroes){
-                if(startingHeros.contains(hero.getHeroClass())){
+                if (town.getStartingHeroClasses().contains(hero.getHeroClass())){
                     heroesForTown.add(hero);
                 }
 
