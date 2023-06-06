@@ -35,7 +35,6 @@ public class Hero {
     @Override
     public int hashCode() {
         return name.hashCode() + heroClass.hashCode();
-         return Objects.hash(name, heroClass);
     }
 
     @Override
