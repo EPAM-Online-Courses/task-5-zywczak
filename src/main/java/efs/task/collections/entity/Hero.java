@@ -19,14 +19,22 @@ public class Hero {
 
     //TODO implementacja metody equal porównująca obiekty Hero na podstawie pól name i heroClass.
     @Override
-    public boolean equals(Object o) {
-        return true;
+    public boolean equals(Object o) {      
+        if (this == o){
+            return true;
+        }
+        if (o == null || Hero.class != o.getClass()){
+            return false;
+        }
+        Hero hero = (Hero) o;
+        
+        return name.equals(hero.name) && heroClass.equals(hero.heroClass);
     }
 
     //TODO implementacja metody equal biorąca pod uwagę name i heroClass.
     @Override
     public int hashCode() {
-        return 1;
+        return name.hashCode() + heroClass.hashCode();
     }
 
     @Override
