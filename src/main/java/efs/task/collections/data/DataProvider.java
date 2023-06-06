@@ -54,21 +54,11 @@ public class DataProvider {
 
     //TODO Analogicznie do getHeroesSet utwórz listę bohaterów na podstawie tablicy Data.DLCCharactersArray
     public Set<Hero> getDLCHeroesSet() {
-        Set<Hero> heroesDlcSet  = new HashSet<>();
-
+        Set<Hero> heroesDlcSet = new HashSet<>();
         for (String hero : Data.dlcCharactersArray) {
-
             String[] parts = hero.split(DATA_SEPARATOR);
-
-            for (int i = 0; i < parts.length; i++) {
-                parts[i] = parts[i].replace(" ", "");
-            }
-
-
-            heroesDlcSet .add(new Hero(parts[0],parts[1]));
-
+            heroesDlcSet.add(new Hero(parts[0].trim(), parts[1].trim()));
         }
-
         return heroesDlcSet;
     }
 
