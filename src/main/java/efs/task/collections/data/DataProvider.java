@@ -28,19 +28,14 @@ public class DataProvider {
 
     //TODO Analogicznie do getTownsList utwórz listę miast na podstawie tablicy Data.DLCTownsArray
     public List<Town> getDLCTownsList() {
-        List<Town> listDlcTowns = new ArrayList<>( Data.dlcTownsArray.length);
-
-        for (String dlcTown : Data.dlcTownsArray) {
-
-            String[] parts = dlcTown.split(DATA_SEPARATOR);
-
-            for (int i = 0; i < parts.length; i++) {
-                parts[i] = parts[i].replace(" ", "");
-            }
-
-            listDlcTowns.add(new Town(parts[0], new ArrayList<>(Arrays.asList(parts[1], parts[2]))));
+        List<Town> listDlcTowns = new ArrayList<>();
+        for (String town : Data.dlcTownsArray) {
+            String[] townData = town.split(DATA_SEPARATOR);
+            List<String> parts = new ArrayList<>();
+            parts.add(townData[1].trim());
+            parts.add(townData[2].trim());
+            listDlcTowns.add(new Town(townData[0], startingHeroes));
         }
-
         return listDlcTowns;
     }
 
