@@ -3,8 +3,11 @@ package efs.task.collections.data;
 import efs.task.collections.entity.Hero;
 import efs.task.collections.entity.Town;
 
+import java.util.List;
+import java.util.Set;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 public class DataProvider {
 
@@ -61,6 +64,4 @@ public class DataProvider {
         }
         return heroesDlcSet;
     }
-
-
 }
