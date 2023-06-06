@@ -1,7 +1,6 @@
 package efs.task.collections.entity;
 
 import java.util.List;
-import java.util.Objects;
 
 public class Town {
     private String townName;
@@ -23,21 +22,20 @@ public class Town {
     //TODO implementacja metody equal porównująca obiekty Town na podstawie tylko townName.
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
+        if (this == o){
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (o == null || Town.class != o.getClass()){
             return false;
         }
-        Town otherTown = (Town) o;
-
-        return Objects.equals(townName, otherTown.townName) ;
+        Town town = (Town) o;
+        return townName.equals(town.townName);
     }
 
     //TODO implementacja metody equal biorąca pod uwagę tylko townName.
     @Override
     public int hashCode() {
-        return Objects.hash(townName);
+        return townName.hashCode();
     }
 
     @Override
