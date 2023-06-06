@@ -18,45 +18,38 @@ public class DataProvider {
     //  Korzystając z funkcji split() oraz stałej DATA_SEPARATOR utwórz listę obiektów klasy efs.task.collections.entities.Town.
     //  Funkcja zwraca listę obiektów typu Town ze wszystkimi dziewięcioma podstawowymi miastami.
     public List<Town> getTownsList() {
-        List<Town> townsList = new ArrayList<>();
+        List<Town> listTowns = new ArrayList<>(Data.baseTownsArray.length);
 
-        for (String townData : Data.baseTownsArray) {
-            String[] townInfo = townData.split(DATA_SEPARATOR);
-            String townName = townInfo[0].trim();
-            String startingHero1 = townInfo[1].trim();
-            String startingHero2 = townInfo[2].trim();
+        for (String town : Data.baseTownsArray) {
+            String[] parts = town.split(DATA_SEPARATOR);
 
-            List<String> startingHeroClasses = new ArrayList<>();
-            startingHeroClasses.add(startingHero1);
-            startingHeroClasses.add(startingHero2);
+            for (int i = 0; i < parts.length; i++) {
+                parts[i] = parts[i].replace(" ", "");
+            }
 
-            Town town = new Town(townName, startingHeroClasses);
-            townsList.add(town);
+            listTowns.add(new Town(parts[0], new ArrayList<>(Arrays.asList(parts[1], parts[2]))));
         }
 
-        return townsList;
+        return listTowns;
     }
     
 
     //TODO Analogicznie do getTownsList utwórz listę miast na podstawie tablicy Data.DLCTownsArray
     public List<Town> getDLCTownsList() {
-        List<Town> dlcTownsList = new ArrayList<>();
+        List<Town> listDlcTowns = new ArrayList<>( Data.dlcTownsArray.length);
 
-        for (String townData : Data.dlcTownsArray) {
-            String[] townInfo = townData.split(DATA_SEPARATOR);
-            String townName = townInfo[0].trim();
-            String startingHero1 = townInfo[1].trim();
-            String startingHero2 = townInfo[2].trim();
+        for (String dlcTown : Data.dlcTownsArray) {
 
-            List<String> startingHeroClasses = new ArrayList<>();
-            startingHeroClasses.add(startingHero1);
-            startingHeroClasses.add(startingHero2);
+            String[] parts = dlcTown.split(DATA_SEPARATOR);
 
-            Town town = new Town(townName, startingHeroClasses);
-            dlcTownsList.add(town);
+            for (int i = 0; i < parts.length; i++) {
+                parts[i] = parts[i].replace(" ", "");
+            }
+
+            listDlcTowns.add(new Town(parts[0], new ArrayList<>(Arrays.asList(parts[1], parts[2]))));
         }
 
-        return dlcTownsList;
+        return listDlcTowns;
     }
 
     //TODO Na podstawie tablicy Data.baseCharactersArray utworzyć listę bohaterów dostępnych w grze.
@@ -64,18 +57,22 @@ public class DataProvider {
     // Korzystając z funkcji split() oraz DATA_SEPARATOR utwórz listę unikalnych obiektów efs.task.collections.entities.Hero.
     // UWAGA w Data.baseCharactersArray niektórzy bohaterowie powtarzają się, do porównania bohaterów używamy zarówno imie jak i jego klasę;
     public Set<Hero> getHeroesSet() {
-        Set<Hero> heroesSet = new HashSet<>();
+       Set<Hero> heroesDlcSet  = new HashSet<>();
 
-        for (String heroData : Data.baseCharactersArray) {
-            String[] heroInfo = heroData.split(DATA_SEPARATOR);
-            String heroName = heroInfo[0].trim();
-            String heroClass = heroInfo[1].trim();
+        for (String hero : Data.dlcCharactersArray) {
 
-            Hero hero = new Hero(heroName, heroClass);
-            heroesSet.add(hero);
+            String[] parts = hero.split(DATA_SEPARATOR);
+
+            for (int i = 0; i < parts.length; i++) {
+                parts[i] = parts[i].replace(" ", "");
+            }
+
+
+            heroesDlcSet .add(new Hero(parts[0],parts[1]));
+
         }
 
-        return heroesSet;
+        return heroesDlcSet;
     }
 
     //TODO Analogicznie do getHeroesSet utwórz listę bohaterów na podstawie tablicy Data.DLCCharactersArray
