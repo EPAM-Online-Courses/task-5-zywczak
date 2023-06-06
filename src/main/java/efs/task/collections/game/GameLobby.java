@@ -4,15 +4,8 @@ import efs.task.collections.data.DataProvider;
 import efs.task.collections.entity.Hero;
 import efs.task.collections.entity.Town;
 
+import java.util.*;
 
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Set;
-import java.util.TreeMap;
 public class GameLobby {
 
     public static final String HERO_NOT_FOUND = "Nie ma takiego bohatera ";
@@ -46,7 +39,6 @@ public class GameLobby {
     //TODO Usunąć miasta i odpowiadających im bohaterów z DLC gry z mapy dostępnych
     // miast - playableTownsWithHeroesList.
     public void disableDLC() {
-
         for(Town town: dataProvider.getDLCTownsList()){
             if(playableTownsWithHeroesList.containsKey(town)) {
                 playableTownsWithHeroesList.remove(town);
@@ -58,7 +50,6 @@ public class GameLobby {
     //  Jeśli tak zwróć listę bohaterów z tego miasta.
     //  Jeśli nie rzuć wyjątek NoSuchElementException z wiadomością NO_SUCH_TOWN + town.getName()
     public List<Hero> getHeroesFromTown(Town town) {
-
         if(playableTownsWithHeroesList.containsKey(town)){
             return playableTownsWithHeroesList.get(town);
         }else{
@@ -73,7 +64,6 @@ public class GameLobby {
         Map<Town, List<Hero>> townsWithHeroesMap = new TreeMap<>(Comparator.comparing(Town::getTownName));
 
         for(Town town : availableTowns){
-            List<String> startingHeros = town.getStartingHeroClasses();
             List<Hero> heroesForTown = new ArrayList<>();
 
             for(Hero hero : availableHeroes){
@@ -91,22 +81,12 @@ public class GameLobby {
     // Jeżeli istnieje usuwa go z listy dostępnych bohaterów w danym mieście i zwraca bohatera.
     // Jeżeli nie ma go na liście dostępnych bohaterów rzuca NoSuchElementException z wiadomością HERO_NOT_FOUND + name
     public Hero selectHeroByName(Town heroTown, String name) {
-
-        if(playableTownsWithHeroesList.containsKey(heroTown)){
-            List<Hero> heroesList = playableTownsWithHeroesList.get(heroTown);
-            for (Hero hero : heroesList) {
-                if (hero.getName().equals(name)) {
-                    heroesList.remove(hero);
-                    return hero;
-                }
+        for (Hero hero : playableTownsWithHeroesList.get(heroTown)) {
+            if (hero.getName().equals(name)) {
+                playableTownsWithHeroesList.get(heroTown).remove(hero);
+                return hero;
             }
-
-            throw new NoSuchElementException(HERO_NOT_FOUND  + name);
-        }else{
-            throw new NoSuchElementException(HERO_NOT_FOUND  + name);
         }
-
-    }
-
-   
+        throw new java.util.NoSuchElementException(HERO_NOT_FOUND + name);
+    }  
 }
